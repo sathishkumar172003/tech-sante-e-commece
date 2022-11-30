@@ -10,16 +10,16 @@ class Addproduct(FlaskForm):
     discount = IntegerField(label="Discount", default=0)
     stock = IntegerField(label="Stock available", validators=[DataRequired()])
 
-    image_1 = FileField('image', validators=[
+    image_1 = FileField('image-1', validators=[
         FileRequired(),
         FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')
     ])
-    image_2 = FileField('image', validators=[
+    image_2 = FileField('image-2', validators=[
         FileRequired(),
         FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')
     ])
     
-    image_3 = FileField('image', validators=[
+    image_3 = FileField('image-3', validators=[
         FileRequired(),
         FileAllowed(['jpg', 'png','jpeg'], 'Images only!')
     ])
