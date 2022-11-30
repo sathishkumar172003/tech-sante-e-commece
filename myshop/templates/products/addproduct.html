@@ -1,0 +1,159 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-lg-7">
+        <form action="{{url_for('addproduct')}}" enctype="multipart/form-data" method="post" novalidate>
+            {{ form.csrf_token }}
+
+            <div class="form-group">
+                    <h2 class="text-center">Add Product </h2>
+            </div>
+            <div class="form-group">
+                {{form.name.label (class='col-form-label-lg')}}
+                {% if form.name.errors %}
+                    {{ form.name (class='form-control is-invalid')}}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.name (class='form-control', placeholder="Enter your product name")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.price.label (class='col-form-label-lg')}}
+                {% if form.price.errors %}
+                    {{ form.price (class='form-control is-invalid')}}
+                    <div class="invalid-feedback">
+                        {% for error in form.price.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.price (class='form-control', placeholder="Enter your product price")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.discount.label (class='col-form-label-lg')}}
+                {% if form.discount.errors %}
+                    {{ form.discount (class='form-control is-invalid')}}
+                    <div class="invalid-feedback">
+                        {% for error in form.discount.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.discount (class='form-control', placeholder="Enter your product discount")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.stock.label (class='col-form-label-lg')}}
+                {% if form.stock.errors %}
+                    {{ form.stock (class='form-control is-invalid')}}
+                    <div class="invalid-feedback">
+                        {% for error in form.stock.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.stock (class='form-control', placeholder="How many stocks are available")}}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label class ="col-form-label-lg" for="brand">Select brand</label>
+
+                <select name="" id="" class="form-control" required>
+                    <option selected value="">Select brand</option>
+                    {% for brand in brands %}
+                            <option value="{{brand.id}}">{{brand.name}}</option>
+
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label class ="col-form-label-lg" for="brand">Select category</label>
+
+                <select name="" id="" class="form-control" required>
+                    <option selected value="">Select category</option>
+                    {% for category in categories %}
+                            <option value="{{category.id}}">{{category.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                {{ form.image_1.label (class='col-form-label-lg')}}
+                {% if form.image_1.errors %}
+                    {{ form.image_1 (class='form-control is-invalid')}}
+                    <div class="invalid-feedback">
+                        {% for error in form.image_1.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.image_1 (class='form-control', placeholder="Enter your product image_1")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.image_2.label (class='col-form-label-lg')}}
+                {% if form.image_2.errors %}
+                    {{ form.image_2 (class='form-control is-invalid')}}
+                    <div class="invalid-feedback">
+                        {% for error in form.image_2.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.image_2 (class='form-control', placeholder="Enter your product image_2")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.image_3.label (class='col-form-label-lg')}}
+                {% if form.image_3.errors %}
+                    {{ form.image_3 (class='form-control is-invalid')}}
+                    <div class="invalid-feedback">
+                        {% for error in form.image_3.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.image_3 (class='form-control', placeholder="Enter your product image_3")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.description.label (class='col-form-label-lg')}}
+                {% if form.description.errors %}
+                    {{ form.description (class='form-control is-invalid')}}
+                    <div class="invalid-feedback">
+                        {% for error in form.description.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.description (class='form-control', placeholder="Enter your product description", rows=7)}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{form.submit (class='btn btn-primary')}}
+            </div>
+            
+
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% include "_messages.html" %}
+
+<form action="{{url_for('register')}}" method="post" novalidate>
+    {{ form.csrf_token }}
+    <div class="form-group">
+        {{ form.username.label (class="col-form-label-lg")}}
+        {% if form.username.errors %}
+                {{form.username (class="form-control is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+        {% else %}
+                {{ form.username (class="form-control", placeholder='Enter your full name')}}
+        {% endif%}
+        <div class="form-group">
+            {{ form.email.label (class="col-form-label-lg")}}
+            {% if form.email.errors %}
+                    {{form.email (class="form-control is-invalid", placeholder="Re-enter your email")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+            {% else %}
+                    {{ form.email (class="form-control", placeholder='Enter your full name')}}
+            {% endif%}
+        </div>
+        <div class="form-group">
+            {{ form.password.label (class="col-form-label-lg")}}
+            {% if form.password.errors %}
+                    {{form.password (class="form-control is-invalid", placeholder="Re-enter your password")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+            {% else %}
+                    {{ form.password (class="form-control", placeholder='Enter your password')}}
+            {% endif%}
+        </div>
+        <div class="form-group">
+            {{ form.confirm_password.label (class="col-form-label-lg")}}
+            {% if form.confirm_password.errors %}
+                    {{form.confirm_password (class="form-control is-invalid", placeholder="Re-enter your confirm_password")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.confirm_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+            {% else %}
+                    {{ form.confirm_password (class="form-control", placeholder='Enter your password')}}
+            {% endif%}
+        </div>
+        <div class="form-group">
+            {{ form.submit (class="btn btn-lg btn-outline-primary mt-3")}}
+        </div>
+
+    </div>
+</form>
+
+
+{% endblock content %}

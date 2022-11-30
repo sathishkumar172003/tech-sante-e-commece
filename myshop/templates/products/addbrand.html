@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+{% include "_messages.html" %}
+{% if brands %}
+<div class="row">
+    <div class="col-lg-7">
+        <form action="{{url_for('addbrand')}}" method="post" >
+            <div class="text-center mt-5"><h2>Add brand</h2></div>
+            <input class="form-control mt-3" type="text" name="brands" placeholder="Enter your category name">
+            <button class="btn  btn-primary mt-3" type="submit"> Add brand </button>
+        </form>
+    </div>
+</div>
+
+{% else %}
+<div class="row">
+    <div class="col-lg-7">
+        <form action="{{url_for('addcategory')}}" method="post">
+            <div class="text-center mt-5"><h2>Add category</h2></div>
+            <input class="form-control mt-3" type="text" name="category" placeholder="Enter your category name">
+            <button class="btn  btn-primary mt-3" type="submit"> Add category </button>
+        </form>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock content %}
