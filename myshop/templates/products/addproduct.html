@@ -73,7 +73,7 @@
             <div class="form-group">
                 <label class ="col-form-label-lg" for="brand">Select brand</label>
 
-                <select name="" id="" class="form-control" required>
+                <select name="brand" id="" class="form-control" required>
                     <option selected value="">Select brand</option>
                     {% for brand in brands %}
                             <option value="{{brand.id}}">{{brand.name}}</option>
@@ -84,7 +84,7 @@
             <div class="form-group">
                 <label class ="col-form-label-lg" for="brand">Select category</label>
 
-                <select name="" id="" class="form-control" required>
+                <select name="category" id="" class="form-control" required>
                     <option selected value="">Select category</option>
                     {% for category in categories %}
                             <option value="{{category.id}}">{{category.name}}</option>

@@ -44,17 +44,17 @@ def addproduct():
         image_1 = request.files['image_1']
         image_1_pic = secure_filename(image_1.filename)
         image_1_uuid = str(uuid.uuid1()) + "_" + image_1_pic
-        image_1.save(os.path.join(app.config['UPLOAD_FOLDER'], image_1_uuid))
+        image_1 = image_1.save(os.path.join(app.config['UPLOAD_FOLDER'], image_1_uuid))
 
         image_2 = request.files['image_2']
         image_2_pic = secure_filename(image_2.filename)
         image_2_uuid = str(uuid.uuid1()) + "_" + image_2_pic
-        image_2.save(os.path.join(app.config['UPLOAD_FOLDER'], image_2_uuid))
+        image_2 = image_2.save(os.path.join(app.config['UPLOAD_FOLDER'], image_2_uuid))
 
         image_3 = request.files['image_3']
         image_3_pic = secure_filename(image_3.filename)
         image_3_uuid = str(uuid.uuid1()) + "_" + image_3_pic
-        image_3.save(os.path.join(app.config['UPLOAD_FOLDER'], image_3_uuid))
+        image_3 = image_3.save(os.path.join(app.config['UPLOAD_FOLDER'], image_3_uuid))
 
         # saving form data into database
         name = form.name.data
@@ -62,12 +62,18 @@ def addproduct():
         discount = form.discount.data
         stock = form.stock.data
         description = form.description.data
+        brand_id = request.form.get('brand')
+        category_id = request.form.get('category')
 
+        product_1 = Product(name = name, price = price, discount = discount,
+        description = description, stock = stock, image_1 = image_1_uuid, image_2=image_2_uuid,
+        image_3= image_3_uuid, brand_id = brand_id, category_id = category_id)
 
+        db.session.add(product_1)
+        db.session.commit()
 
-
-        flash('sucessfully product added', 'success')
-        return redirect(url_for('addbrand'))
+        flash(f'The  product {name} added to your database', 'success')
+        return redirect(url_for('admin'))
     return render_template('products/addproduct.html', 
     title="Add product page", form=form, brands = brand, 
     categories = category)
