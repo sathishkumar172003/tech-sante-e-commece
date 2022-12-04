@@ -35,10 +35,40 @@
                     <td>
                         <img src="{{url_for('static',filename='images/'+product.image_1)}}" width="50" height="40" alt="product image">
                     </td>
-                    <td> <a class="btn btn-outline-info" href="{{ url_for('updatepro', id=product.id)}}"> Edit </a> </td>
-                    <td><a class="btn btn-outline-danger" href="{{ url_for('deleteproduct', id=product.id) }}"> Delete </a> </td>
+                    <td> <a class="btn alert alert-warning p-1" style="width: 60px;" href="{{ url_for('updatepro', id=product.id)}}"> Edit </a> </td>
+                    <td>
+                        <!-- <a class="btn alert alert-danger p-1" style="width: 60px;" href="{{ url_for('deleteproduct', id=product.id) }}"> Delete </a>  -->
+                        <button type="button" class="btn alert alert-danger p-1" style="width: 60px;"  data-bs-toggle="modal" data-bs-target="#exampleModal-{{product.id}}">
+                            Delete
+                          </button>
+                    </td>
     
                 </tr>
+
+                <!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal-{{product.id}}" tabindex="-1" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-dark">{{product.name}}</h5>
+=        </div>
+        <div class="modal-body">
+          <span class="text-danger ">Are you sure want to delete this product {{product.name}}?</span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="{{ url_for('deleteproduct', id=product.id) }}">
+                <button type="button" class="btn btn-primary" >Yes</button>
+           </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
                 {% endfor %}
             </tbody>
         </table>

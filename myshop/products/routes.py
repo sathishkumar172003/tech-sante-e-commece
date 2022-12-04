@@ -9,6 +9,13 @@ import uuid
 UPLOAD_FOLDER = '/home/sathish/VsCode/python-projects/e-commerce/myshop/static/images/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
 
+
+@app.route('/')
+def home():
+    product = Product.query.filter(Product.stock > 0)
+    return render_template('products/all_products_page.html', products = product)
+
+
 @app.route('/product/addbrand', methods=["POST", "GET"])
 def addbrand():
     if 'email' not in session:
@@ -16,11 +23,19 @@ def addbrand():
         return redirect(url_for('login'))
     if request.method == "POST":
         brand_name = request.form.get('brands')
-        brand = Brand(name=brand_name)
-        db.session.add(brand)
-        db.session.commit()
-        flash(f'The brand {brand_name} added successfully', "success")
-        return redirect(url_for('addbrand'))
+        brands = Brand.query.filter_by(name=brand_name).first()
+
+        try:
+            
+            brand = Brand(name=brand_name)
+            db.session.add(brand)
+            db.session.commit()
+            flash(f'The brand {brand_name} added successfully', "success")
+            return redirect(url_for('addbrand'))
+        except:
+            if brands:
+                flash(f"{brand_name} is already added", "warning")
+                return redirect(url_for('addbrand'))
     return render_template('products/addbrand.html', brands="brands",bg_dark = "true")
 
 
@@ -68,11 +83,18 @@ def addcategory():
         return redirect(url_for('login'))
     if request.method == "POST":
         cat_name = request.form.get('category')
-        category = Category(name=cat_name)
-        db.session.add(category)
-        db.session.commit()
-        flash(f'The category {cat_name} added successfully', "success")
-        return redirect(url_for('addcategory'))
+        categories = Category.query.filter_by(name=cat_name)
+        try:
+            category = Category(name=cat_name)
+            db.session.add(category)
+            db.session.commit()
+            flash(f'The category {cat_name} added successfully', "success")
+            return redirect(url_for('addcategory'))
+        except:
+            if categories:
+                flash(f'The {cat_name} is already available', 'warning')
+                return redirect(url_for('addcategory'))
+
     return render_template('products/addbrand.html' , bg_dark = "true")
 
 @app.route('/product/updatecat/<int:id>' ,methods=["POST","GET"])
@@ -225,16 +247,26 @@ def updatepro(id):
         form.image_3.data = product.image_3
  
     return render_template('products/update_product.html', brands = brands,
-    categories = categories, form = form, product = product, title="Update page")
+    categories = categories, form = form, bg_dark='true', product = product, title="Update page")
 
 
 
 
-@app.route('/product/deleteproduct/<int:id>', methods=["POST","GET"])
+@app.route('/product/deleteproduct/<int:id>', methods=["GET"])
 def deleteproduct(id):
     product = Product.query.get_or_404(id)
     product_name = product.name
-    db.session.delete(product)
-    db.session.commit()
-    flash(f'{product_name} have succesfully deleted', 'success')
-    return redirect(url_for('products'))
+    try:
+        os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_1))
+        os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_2))
+        os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_3))
+        db.session.delete(product)
+        db.session.commit()
+        flash(f'{product_name} have succesfully deleted', 'success')
+        return redirect(url_for('products'))
+    except:
+        flash(f" product {product_name} can't be deleted", "danger")
+        return redirect(url_for('products'))
+
+
+    
