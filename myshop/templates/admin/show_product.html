@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+
+
+{% block content %}
+<div class="container-fluid p-0 " >
+
+    {% include "_admin_navbar.html" %}
+    <div class="container mt-5 ">
+        {% include "_messages.html" %}
+  
+    <div class="container mb-5 text-center text-dark alert alert-info p-1">
+        <h2 > Product information </h2>
+    </div>
+    <div class="container  ">
+        <table class="table table-sm-5 table-hover">
+            <thead>
+                <th>Sl.No</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Brand</th>
+                <th>Image</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+                {% for product in products%}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.discount}}</td>
+                    <td>{{product.brand.name}}</td>
+                    <td>
+                        <img src="{{url_for('static',filename='images/'+product.image_1)}}" width="50" height="40" alt="product image">
+                    </td>
+                    <td> <a class="btn btn-outline-info" href="{{ url_for('updatepro', id=product.id)}}"> Edit </a> </td>
+                    <td><a class="btn btn-outline-danger" href="{{ url_for('deleteproduct', id=product.id) }}"> Delete </a> </td>
+    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      
+    </div>
+
+</div>
+</div>
+
+{% endblock content %}

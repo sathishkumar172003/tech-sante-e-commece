@@ -11,12 +11,19 @@
     <!-- custom css -->
     <link rel="stylesheet", href="{{url_for('static', filename='css/styles.css')}}">
   </head>
-  <body>
-    <div class="container">
+  {% if bg_dark %}
+      <body class="bg_dark">
+
+  {% else %}
+    <body>
+  {% endif %}
+ 
+  
+
       {% block content %}
 
       {% endblock content %}
-    </div>
+   
 
     <script src="{{url_for('static', filename='js/bootstrap-js.js')}}"></script>    
     <!-- jquery -->

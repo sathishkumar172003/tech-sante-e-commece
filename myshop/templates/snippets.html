@@ -1,0 +1,47 @@
+
+{% for product in products %}
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+                
+
+                    <div class="col-lg-5 " >
+                        <img style="width:50% ;"src="{{url_for('static',filename='images/'+product.image_1)}}"  alt="product image">
+                    </div>
+                    
+
+
+                    <div class="col-lg-7">
+                        <h2>{{ product.name }}</h2>
+                        <small>{{product.discount}}</small>
+                        <h5>{{product.price}}</h5>
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+
+@app.route('/product/deletebrand/<int:id>', methods = ["POST", "GET"])
+    def deletebrand(id):
+        if "email" not in session:
+            flash("please login to access this page", "danger")
+            return redirect(url_for('login'))
+        deletebrand = Brand.query.get_or_404(id)
+        if deletebrand and request.method == "POST":
+            pass
+            
+    
+    
+        return render_template('products/delete_brand.html', title="delete brand", deletebrand = deletebrand,
+        bg_dark = "true")

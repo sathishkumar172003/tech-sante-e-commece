@@ -1,16 +1,23 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<div class="container-fluid">
+    {% include "_admin_navbar.html" %}
+</div>
 
-{% include "_messages.html" %}
-<div class="row">
+<div class="container mt-5 ">
+
+
+
+<div class="row ">
     <div class="col-lg-7 mt-5">
         <form action="{{url_for('register')}}" method="post" novalidate>
             {{ form.csrf_token }}
-            <div class="text-center h1 text-white bg-primary p-2">
+            <div class="text-center  text-dark  p-1 mb-2 alert alert-info">
                 <h2 >Register</h2>
                 
             </div>
+            {% include "_messages.html" %}
             <div class="form-group">
                 {{ form.username.label (class="col-form-label-lg")}}
                 {% if form.username.errors %}
@@ -63,13 +70,15 @@
                     {% endif%}
                 </div>
                 <div class="form-group">
-                    {{ form.submit (class="btn btn-lg btn-outline-primary mt-3")}}
+                    {{ form.submit (class="btn btn-lg btn-outline-success mt-3")}}
                 </div>
         
             </div>
         </form>
 
     </div>
+</div>
+
 </div>
 
 

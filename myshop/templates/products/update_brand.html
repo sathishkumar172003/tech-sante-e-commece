@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+<div class="container-fluid mb-5 p-0">
+    {% include "_admin_navbar.html" %}
+
+
+
+<div class="container mt-5">
+
+
+<div class="row">
+    <div class="col-lg-7">
+        {% if brands %}
+        <form action="{{url_for('updatebrand', id=updatebrand.id)}}" method="post" >
+            <div class="text-center h1 text-dark alert alert-info p-2">
+                <h2 >update brand</h2>
+                
+            </div>
+            <input class="form-control mt-3" type="text" name="brands" value="{{updatebrand.name}}">
+            <button class="btn   alert alert-success mt-3 p-2" type="submit" style="width: 92px;"> update </button>
+
+        </form>
+        <a href="{{url_for('brands')}}" style="color:white"><button class="btn  alert alert-danger  mt-3 p-2" style="width: 92px;" > cancel </button></a>
+
+        {% else %}
+        <form action="{{url_for('updatecat', id=updatecat.id)}}" method="post" >
+            <div class="text-center h1 text-dark alert alert-info p-2">
+                <h2 >Update category</h2>
+                
+            </div>
+            <input class="form-control mt-3" type="text" name="category" value="{{updatecat.name}}">
+            <button class="btn   alert alert-success mt-3 p-2" type="submit" style="width: 92px;"> update </button>
+        </form>
+        <a href="{{url_for('category')}}" style="color:white"><button class="btn  alert alert-danger  mt-3 p-2" style="width: 92px;"> cancel </button></a>
+
+        {% endif %}
+
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

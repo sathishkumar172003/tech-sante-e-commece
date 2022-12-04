@@ -2,18 +2,27 @@
 
 
 {% block content %}
-{% include "_messages.html" %}
+<div class="container-fluid">
+    {% include "_admin_navbar.html" %}
+
+</div>
+
+<div class="container">
+    {% include "_messages.html" %}
+
 {% if brands %}
 <div class="row">
     <div class="col-lg-7 mt-5">
         <form action="{{url_for('addbrand')}}" method="post" >
-            <div class="text-center h1 text-white bg-primary p-2">
+            <div class="text-center h1 text-dark alert alert-info p-1 ">
                 <h2 >Add brand</h2>
                 
             </div>
-            <input class="form-control mt-3" type="text" name="brands" placeholder="Enter your category name">
-            <button class="btn  btn-primary mt-3" type="submit"> Add brand </button>
+            <input class="form-control mt-4 mb-3" type="text" name="brands" placeholder="Enter your category name">
+            <button class="alert btn alert-success mt-3 p-2 " type="submit"> Add brand </button>
         </form>
+        <a href="{{url_for('brands')}}" style="color:white;"><button class=" alert btn alert-danger mt-3 p-2  " style="width: 92px;" > cancel </button></a>
+
     </div>
 </div>
 
@@ -21,14 +30,17 @@
 <div class="row">
     <div class="col-lg-7 mt-5">
         <form action="{{url_for('addcategory')}}" method="post">
-            <div class="text-center h1 text-white bg-primary p-2">
-                <h2 >Add product</h2>
+            <div class="text-center h1 text-dark alert alert-info p-2">
+                <h2 >Add category</h2>
                 
             </div>           
              <input class="form-control mt-3" type="text" name="category" placeholder="Enter your category name">
-            <button class="btn  btn-primary mt-3" type="submit"> Add category </button>
+            <button class="alert btn alert-success mt-3 p-2" type="submit"> Add category </button>
         </form>
+        <a href="{{url_for('category')}}"><button class="alert btn alert-danger mt-3 p-2" style="width: 115px;" > cancel </button></a>
+
     </div>
+</div>
 </div>
 
 {% endif %}

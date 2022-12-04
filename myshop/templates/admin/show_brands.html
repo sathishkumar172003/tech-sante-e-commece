@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+    <div class="container-fluid p-0 bg-dark">
+        {% include "_admin_navbar.html" %}
+        <div class="container pt-5">
+            {% include "_messages.html" %}
+        </div>
+      
+        <div class="container ">
+            <div class="text-center text-dark p-1 mb-4 alert alert-info">
+                <h2>{{ table_heading}} INFORMATION</h2>
+            </div>
+            <table class="table table-sm-5 table-hover">
+                <thead>
+                    <th>Sl.No</th>
+                    <th>Brand Name</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </thead>
+           {% if brands %}
+                <tbody>
+                    {% for brand in brands %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{brand.name}}</td>
+                        <td> <a class="btn btn-outline-info" href="{{ url_for('updatebrand', id=brand.id)}}"> Edit </a></td>
+                        <td><a class="btn btn-outline-danger" href="{{ url_for('deletebrand', id=brand.id )}}"> Delete </a></td>
+                    </tr>
+                    {% endfor %}
+
+                    
+                </tbody>
+                {% else %}
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{category.name}}</td>
+                        <td> <a class="btn btn-outline-info" href="{{ url_for('updatecat', id=category.id)}}"> Edit </a></td>
+                        <td><a class="btn btn-outline-danger" href="{{ url_for('deletecat', id=category.id )}}"> Delete </a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% endif %}
+            </table>
+        </div>
+
+    </div>
+{% endblock %}

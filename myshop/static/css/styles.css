@@ -1,0 +1,24 @@
+th, td {
+    color: white ;
+}
+
+.bg_dark{
+    background-color: black;
+    color: white;
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #d1ecf1 ;
+    color: black;
+}
+
+
+.inline {
+    display: inline-flex;
+}
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> {{ title }}</title>
+
+    <!-- bootstrap locally stored file -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap-css.css')}}">
+    
+    <!-- custom css -->
+    <link rel="stylesheet", href="{{url_for('static', filename='css/styles.css')}}">
+  
+</head>
+  <body style="background-color: black; color:white">
+  
+
+      {% block content %}
+
+      {% endblock content %}
+   
+
+    <script src="{{url_for('static', filename='js/bootstrap-js.js')}}"></script>    
+    <!-- jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <!-- customized js -->
+    <script src="{{url_for('static', filename='js/index.js')}}"></script>
+  </body>
+</html>
