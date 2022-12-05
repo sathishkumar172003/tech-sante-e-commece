@@ -13,7 +13,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/')
 def home():
     product = Product.query.filter(Product.stock > 0)
-    return render_template('products/all_products_page.html', products = product)
+    brands = Brand.query.all()
+    categories = Category.query.all()
+    return render_template('products/all_products_page.html', products = product,
+    brands=brands,categories=categories )
 
 
 @app.route('/product/addbrand', methods=["POST", "GET"])
