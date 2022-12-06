@@ -11,12 +11,36 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route('/')
-def home():
-    product = Product.query.filter(Product.stock > 0)
-    brands = Brand.query.all()
-    categories = Category.query.all()
+def product_home():
+    page = request.args.get('page', 1, type=int)
+    product = Product.query.filter(Product.stock > 0).order_by(Product.id.desc()).paginate(per_page=2, page=page)
+    brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
+    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
     return render_template('products/all_products_page.html', products = product,
-    brands=brands,categories=categories )
+    brands=brands,categories=categories, product_page = "true" )
+
+@app.route('/productByBrand/<int:id>', methods=["POST", "GET"])
+def product_by_brand(id):
+    page = request.args.get('page', 1, type=int)
+    product_by_brand = Product.query.filter_by(brand_id = id).paginate(page=page, per_page=2)
+    brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
+    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+    return render_template('products/all_products_page.html', products = product_by_brand,
+    brands=brands,categories=categories, brand_page = "true" ,id=id)
+    
+@app.route('/productByCat/<int:id>', methods=["POST", "GET"])
+def product_by_cat(id):
+    page = request.args.get('page', 1, type=int)
+    product_by_cat = Product.query.filter_by(category_id = id).paginate(page=page, per_page=2)
+    brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
+    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+    return render_template('products/all_products_page.html', products = product_by_cat,
+    brands=brands,categories=categories, category_page = "true", id=id )
+
+
+
+
+
 
 
 @app.route('/product/addbrand', methods=["POST", "GET"])
@@ -202,6 +226,8 @@ def updatepro(id):
         product.stock = form.stock.data
         product.description = form.description.data
         product.discount = form.discount.data
+        product.brand_id = request.form.get('brand')
+        product.category_id = request.form.get('category')
 
         image_1 = request.files['image_1']
         image_1_pic = secure_filename(image_1.filename)
