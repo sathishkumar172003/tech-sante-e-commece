@@ -38,7 +38,10 @@ def product_by_cat(id):
     brands=brands,categories=categories, category_page = "true", id=id )
 
 
-
+@app.route('/single_product/<int:id>', methods=["POST", "GET"])
+def single_product(id):
+    product = Product.query.get_or_404(id)
+    return render_template('products/single_product.html', product = product, title=product.name)
 
 
 

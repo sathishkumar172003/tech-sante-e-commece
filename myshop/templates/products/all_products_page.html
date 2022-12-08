@@ -20,7 +20,9 @@
                     <h6 class="text-dark" style="margin-left:320px;"> Price: Rs.{{product.price}} </h6>
                 <div class="card-footer" style="position:absolute ; left:320px; bottom:10px;">
                     <button class="btn btn-warning">Add to cart</button>
-                    <button class="btn btn-success m-3">Details</button>
+                    <a href="{{ url_for('single_product', id=product.id)}}">
+
+                   <button class="btn btn-success m-3" >Details</button> </a>
                 </div>  
                 </div>
 
