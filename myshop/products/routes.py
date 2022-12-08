@@ -13,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/')
 def product_home():
     page = request.args.get('page', 1, type=int)
-    product = Product.query.filter(Product.stock > 0).order_by(Product.id.desc()).paginate(per_page=2, page=page)
+    product = Product.query.filter(Product.stock > 0).order_by(Product.id.desc()).paginate(per_page=5, page=page)
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
     return render_template('products/all_products_page.html', products = product,

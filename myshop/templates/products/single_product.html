@@ -5,6 +5,7 @@
 <div class="container-fluid p-0">
     {% include "_home_navbar.html" %}
     <div class="container mt-5 ">
+        {% include "_messages.html" %}
         <div class="row">
             <div class="col-lg-1 "  >
                 <div class="container " style="position: relative; left: -40px;">
@@ -24,6 +25,7 @@
                 <img id="big_image" src="{{url_for('static', filename='images/' + product.image_1)}}" 
                 alt="{{product.name}}" width="400" height="400">
                 <div class="container mt-5">
+                    
                     <button class="btn btn-lg btn-warning" style="width: 180px; margin-right: 25px; position: relative;right: 15px;">Add to cart</button>
                     <button class="btn btn-lg btn-success" style="width: 180px;">Buy Now</button>
 
@@ -49,7 +51,13 @@
 
                 <h6 class="text-muted mt-4">Brand : {{product.brand.name}}</h5>
                 <h6 class="text-muted mt-2">category : {{product.category.name}}</h5>
-
+                
+                <form action="{{url_for('add_cart')}}" method="post">
+                    <input type="hidden" name="product_id" value="{{product.id}}">
+                    <label for="">Quantity</label>
+                    <input type="text" name="quantity" value="1" min="1" max="{{product.stock}}">
+                    <button type="submit">Add cart</button>
+                </form>
                 <h5 class="mt-5">Product Description: </h2>
                     <img  class ="m-3 mt-4 mb-4"src="{{ url_for('static', filename='images/' + product.image_3)}}" alt="">
                     <p>{{ product.description}}</p>
