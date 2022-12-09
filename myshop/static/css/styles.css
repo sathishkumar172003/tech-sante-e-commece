@@ -17,8 +17,13 @@ th, td {
     display: inline-flex;
 }
 
+.dark-orange{
+    background-color: #F47C7C;
+}
 
-
+.light-orange{
+    background-color: #FFDCA9;
+}
 
 
 

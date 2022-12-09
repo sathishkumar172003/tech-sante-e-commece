@@ -13,9 +13,14 @@ def merge_cart(dict1, dict2):
 
 @app.route('/showCarts', methods=["POST", "GET"])
 def show_carts():
+    
     if 'shopping_cart' not in session:
+        flash('you have no item in your cart', 'warning')
         return redirect(request.referrer)
+    if len(session['shopping_cart']) == 0:
+        return redirect(url_for('product_home'))
     total_price = 0
+
     total_discount = 0
     for key, product in session['shopping_cart'].items():
         total_price += int(product['quanity'] )* int(product['price'])
@@ -64,3 +69,56 @@ def add_cart():
         print(e)
     finally:
         return redirect(request.referrer)
+
+
+@app.route('/updateCart/<int:id>', methods=["POST","GET"])
+def update_cart(id):
+    if 'shopping_cart' not in session and len(session['shopping_cart']) == 0:
+        return redirect(url_for('product_home'))
+    if request.method == "POST":
+        quantity = request.form.get('quantity')
+        try:
+            session.modified = True
+            for key, item in session['shopping_cart'].items():
+                if int(key) == int(id):
+                    print(key)
+                    item['quanity'] = quantity
+                    print(item['quanity'])
+                    return redirect(url_for('show_carts'))
+        except Exception as e:
+            print(e)
+
+    return redirect(request.referrer)
+
+
+
+@app.route('/removeCart/<int:id>')
+def remove_cart(id):
+    if 'shopping_cart' not in session and len(session['shopping_cart']):
+        return redirect(url_for('product_home'))
+    
+    try:
+        session.modified = True
+        for key, item in session['shopping_cart'].items():
+            if int(key) == int(id):
+                
+                session['shopping_cart'].pop(key, None)
+                print('succesffully delted')
+                return redirect(url_for('show_carts'))
+    except Exception as e:
+        print(e)
+    
+    return redirect(request.referrer)
+
+
+
+@app.route('/clearCart')
+def clear_cart():
+    try:
+        session.pop('shopping_cart')
+        return redirect(url_for('product_home'))
+    except Exception as e:
+        print(e)
+    return redirect(url_for('product_home'))
+
+  

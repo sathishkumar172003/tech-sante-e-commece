@@ -1,40 +1,53 @@
 {% extends "layout.html" %}
-
-
-
 {% block content %}
+
 
 <div class="container-fluid p-0">
     {% include "_home_navbar.html" %}
-    <div class="container">
-        <div class="row">
+    <div class="container ">
+    
+        
+        
+        <div class="row mt-4">
             <div class="col-lg-7"  >
+                <div class="card mb-4" style="border: none;">
+                    <h3>Shopping cart</h3>
+                </div>
                 <div class="row">
                     {% for key, product in session['shopping_cart'].items() %}
                     <div class="col-md-12 ">
                         {% set pro_discount = ((product.discount/100) * product.price  ) %}
-                        <div class="card" style="border: none;">
+                        <div class="card mb-5" style="border: none;">
                            <div class="card-body">
                             <img class=" card-img-top float-start me-lg-5 "  style="width:180px ; margin-left: 55px; " src="{{url_for('static', filename='images/'+product.image)}}"  width="40" height="150"alt="product image ">
-                          
-                            <h6 class="text-dark mt-3" style="margin-left:320px;">{{product.name}}</h6>
+                            <a href="{{ url_for('single_product', id=key)}}">
+
+                                <h6 class="text-dark mt-3" style="margin-left:320px;">{{product.name}}</h6>
+
+                            </a>
                             <h6 class="text-dark" style="margin-left:320px;"> Price: Rs.{{product.price}} </h6>
                             {% if product.discount > 0 %}
                             <h6 class="text-dark" style="margin-left:320px;">Discount: <span class="text-success">-{{ pro_discount}}</span> ({{ product.discount }}%off)</h5>
                             {% endif %}
-                            <h6 style="margin-left:320px;">Quantity: {{product.quanity}}</h6>
-                        <div class="card-footer" style="position:absolute ; left:320px; bottom:10px; background-color: white; border: none; ">
-                      
+                        <div class="card-footer " style="position:absolute ; left:320px; ; background-color: white; border: none; ">
+                            <form action="{{url_for('update_cart', id=key)}}" method="post">
+                                <label class="form-label">quantity:</label>
+                                <input class="form-control-sm"type="number" name="quantity" value="{{product.quanity}}" min="1" max="{{product.stock}}">
+                                <button type="submit" > update </button>
+                            </form>
+                            <a class="text-dark "  href="{{ url_for('remove_cart', id = key)}}"><h6 style="font-size: 15px;" ><i class="fa-solid fa-trash text-danger " style="font-size: 15px;" ></i> Remove item </h6></a>
                         </div>  
                         </div>
         
                         </div>
             </div>
             {% endfor%}
+            <a href="{{ url_for('clear_cart')}}">Clear cart</a>
          
         </div>
         
     </div>
+    
     <div class="col-lg-4 ">
         <div class="card  m-0 mt-5 ms-3">
             <div class="card-header m-0 pt-3 pb-3">
@@ -67,7 +80,7 @@
         </div>
         </div>
         <form action="#" >
-            <button class="btn btn-lg btn-primary mt-5 ms-3 text-center" style="width: 200px;">Place order</button>
+            <button class="btn btn-lg dark-orange mt-5 ms-3 text-center" style="width: 200px;">Place order</button>
         </form>
     </div>
 
@@ -76,5 +89,7 @@
 </div>
 </div>
 </div>
+
+
 
 {% endblock content %}

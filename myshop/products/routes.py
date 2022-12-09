@@ -19,6 +19,12 @@ def product_home():
     return render_template('products/all_products_page.html', products = product,
     brands=brands,categories=categories, product_page = "true" )
 
+
+
+
+
+
+
 @app.route('/productByBrand/<int:id>', methods=["POST", "GET"])
 def product_by_brand(id):
     page = request.args.get('page', 1, type=int)

@@ -5,7 +5,7 @@
 <div class="container-fluid p-0">
     {% include "_home_navbar.html" %}
     <div class="container mt-5 ">
-        {% include "_messages.html" %}
+      
         <div class="row">
             <div class="col-lg-1 "  >
                 <div class="container " style="position: relative; left: -40px;">
@@ -26,8 +26,7 @@
                 alt="{{product.name}}" width="400" height="400">
                 <div class="container mt-5">
                     
-                    <button class="btn btn-lg btn-warning" style="width: 180px; margin-right: 25px; position: relative;right: 15px;">Add to cart</button>
-                    <button class="btn btn-lg btn-success" style="width: 180px;">Buy Now</button>
+                    <button class="btn btn-lg dark-orange" style="width: 180px; margin-left: -13px;">Buy Now</button>
 
                 </div>
             </div>
@@ -37,26 +36,33 @@
 
             <div class="col-lg-5 mt-5 m-5">
                 <h5 class="mb-3">{{ product.name }}</h5>
-
-                {% if  product.discount > 0%}
-
+                {% if product.discount >= 30 and product.stock <= 500 %}
+                <span class=' text-success d-block'>limited offer </span>
                 <h3 class='float-start ' style="margin-right: 20px;"> ₹{{ product.price }}</h3>
-               
-                <h6 style="margin-top: 26px;" >Discount: {{product.discount}}%</h6>
-                {% elif product.discount == 0 %}
-                <h3 > ₹{{ product.price }}</h3>
 
+                <h6 style="margin-top: 10px;" >Discount: {{product.discount}}%</h6>
 
+                {% elif product.discount > 0%}
+                <h3 class='float-start ' style="margin-right: 20px;"> ₹{{ product.price }}</h3>
+
+                <h6 style="margin-top: 28px;" >Discount: {{product.discount}}%</h6>
                 {% endif %}
 
+                {% if product.discount == 0 %}
+                <h3 > ₹{{ product.price }}</h3>
+                {% endif %}
+
+            
+
+
                 <h6 class="text-muted mt-4">Brand : {{product.brand.name}}</h5>
-                <h6 class="text-muted mt-2">category : {{product.category.name}}</h5>
+                <h6 class="text-muted mt-2 mb-4">category : {{product.category.name}}</h5>
                 
                 <form action="{{url_for('add_cart')}}" method="post">
                     <input type="hidden" name="product_id" value="{{product.id}}">
-                    <label for="">Quantity</label>
-                    <input type="text" name="quantity" value="1" min="1" max="{{product.stock}}">
-                    <button type="submit">Add cart</button>
+                    <label class="form-label me-3">Quantity</label>
+                    <input type="text" class="form-control-sm" name="quantity" value="1" min="1" max="{{product.stock}}">
+                    <button type="submit"class="btn btn-lg light-orange" style="width: 180px;  position: absolute;left: 539px; top:610px; "><i class="fa-solid fa-cart-shopping"></i>Add to cart</button>
                 </form>
                 <h5 class="mt-5">Product Description: </h2>
                     <img  class ="m-3 mt-4 mb-4"src="{{ url_for('static', filename='images/' + product.image_3)}}" alt="">
