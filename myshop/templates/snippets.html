@@ -1,14 +1,10 @@
-if request.method == "POST":
-product_id = id
+@app.route('/searchResult', methods=["POST", "GET"])
+def search_result():
+    if request.method == "POST":
+        search_word = request.form.get('search')
+        
+        products = Product.query.msearch(search_word, fields=['name', 'description', 'price'], limit=3)
+        return render_template('products/all_products_page.html', products = products)
 
-quantity = int(request.form.get('quantity'))
-try:
-    session.modified = True
-    for key, product in session['shopping_cart']:
-        if int(key) == product_id:
-            print(key)    
-            product['quanity'] = quantity
-            flash('updated','success')
-            return redirect(request.referrer)
-except Exception as e:
-    print(e)
+    return render_template('products/search_result.html')
+

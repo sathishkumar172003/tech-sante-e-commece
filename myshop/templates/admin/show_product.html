@@ -33,7 +33,7 @@
                     <td>{{product.discount}}</td>
                     <td>{{product.brand.name}}</td>
                     <td>
-                        <img src="{{url_for('static',filename='images/'+product.image_1)}}" width="50" height="40" alt="product image">
+                        <img src="{{url_for('static',filename='images/product_images/'+product.image_1)}}" width="50" height="40" alt="product image">
                     </td>
                     <td> <a class="btn alert alert-warning p-1" style="width: 60px;" href="{{ url_for('updatepro', id=product.id)}}"> Edit </a> </td>
                     <td>

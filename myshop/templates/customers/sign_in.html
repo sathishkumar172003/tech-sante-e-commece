@@ -1,0 +1,164 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+  <div class="container-fluid p-0 ">
+      {% include "_home_navbar.html" %}
+      <div class="container">
+         
+        <div class="tab-form">
+          <div class="tab-body">
+            <form action="{{url_for('sign_in')}}" enctype="multipart/form-data" method="post" novalidate>
+                {{ form.csrf_token }}
+                <div class="text-center  text-dark  p-1 mb-2 alert alert-info">
+                    <h2 >Register</h2>
+                    
+                </div>
+                {% include "_messages.html" %}
+              <div class="form-group">
+                {{ form.username.label (class="form-label mt-3")}}
+                {% if form.username.errors %}
+                    {{ form.username (class="form-control is-invalid ", placeholder="Re-enter  username")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                            <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {%  else %}
+                    {{ form.username (class="form-control" , placeholder="Enter  username")}}
+                {% endif %}
+            </div>
+             
+          <div class="form-group">
+            {{ form.email.label (class="form-label")}}
+            {% if form.email.errors %}
+                {{ form.email (class="form-control is-invalid ", placeholder="Re-enter  email")}}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+            {%  else %}
+                {{ form.email (class="form-control" , placeholder="Enter  email")}}
+            {% endif %}
+        </div>
+
+              <div class="form-group">
+                {{ form.password.label (class="form-label")}}
+                {% if form.password.errors %}
+                    {{ form.password (class="form-control is-invalid ", placeholder="Re-enter your password")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {%  else %}
+                    {{ form.password (class="form-control" , placeholder="Enter your password")}}
+                {% endif %}
+            </div>
+      
+        <div class="form-group">
+          {{ form.confirm_password.label (class="form-label")}}
+          {% if form.confirm_password.errors %}
+              {{ form.confirm_password (class="form-control is-invalid ", placeholder="Re-enter  confirm_password")}}
+              <div class="invalid-feedback">
+                  {% for error in form.confirm_password.errors %}
+                      <span> {{ error }}</span>
+                  {% endfor %}
+              </div>
+          {%  else %}
+              {{ form.confirm_password (class="form-control" , placeholder="Enter  confirm_password")}}
+          {% endif %}
+      </div>
+      <div class="form-group">
+        {{ form.address.label (class="form-label")}}
+        {% if form.address.errors %}
+            {{ form.address (class="form-control is-invalid ", placeholder="Re-enter  address")}}
+            <div class="invalid-feedback">
+                {% for error in form.address.errors %}
+                    <span> {{ error }}</span>
+                {% endfor %}
+            </div>
+        {%  else %}
+            {{ form.address (class="form-control" , placeholder="Enter  address")}}
+        {% endif %}
+    </div>
+    <div class="form-group">
+      {{ form.country.label (class="form-label")}}
+      {% if form.country.errors %}
+          {{ form.country (class="form-control is-invalid ", placeholder="Re-enter  country")}}
+          <div class="invalid-feedback">
+              {% for error in form.country.errors %}
+                  <span> {{ error }}</span>
+              {% endfor %}
+          </div>
+      {%  else %}
+          {{ form.country (class="form-control" , placeholder="Enter  country")}}
+      {% endif %}
+  </div>
+  <div class="form-group">
+    {{ form.state.label (class="form-label")}}
+    {% if form.state.errors %}
+        {{ form.state (class="form-control is-invalid ", placeholder="Re-enter  state")}}
+        <div class="invalid-feedback">
+            {% for error in form.state.errors %}
+                <span> {{ error }}</span>
+            {% endfor %}
+        </div>
+    {%  else %}
+        {{ form.state (class="form-control" , placeholder="Enter  state")}}
+    {% endif %}
+</div>
+<div class="form-group">
+  {{ form.city.label (class="form-label")}}
+  {% if form.city.errors %}
+      {{ form.city (class="form-control is-invalid ", placeholder="Re-enter  city")}}
+      <div class="invalid-feedback">
+          {% for error in form.city.errors %}
+              <span> {{ error }}</span>
+          {% endfor %}
+      </div>
+  {%  else %}
+      {{ form.city (class="form-control" , placeholder="Enter  city")}}
+  {% endif %}
+</div>
+<div class="form-group">
+  {{ form.zipcode.label (class="form-label")}}
+  {% if form.zipcode.errors %}
+      {{ form.zipcode (class="form-control is-invalid ", placeholder="Re-enter  zipcode")}}
+      <div class="invalid-feedback">
+          {% for error in form.zipcode.errors %}
+              <span> {{ error }}</span>
+          {% endfor %}
+      </div>
+  {%  else %}
+      {{ form.zipcode (class="form-control" , placeholder="Enter  zipcode")}}
+  {% endif %}
+</div>
+<div class="form-group">
+    {{ form.profile.label (class='col-form-label-lg')}}
+    {% if form.profile.errors %}
+        {{ form.profile (class='form-control is-invalid')}}
+        <div class="invalid-feedback">
+            {% for error in form.profile.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        {{ form.profile (class='form-control', placeholder="Enter your  profile")}}
+    {% endif %}
+</div>
+
+          
+              <div class="form-group">
+                {{ form.submit (class='btn dark-orange mt-3')}}
+              </div>
+
+          </div>
+        </div>
+      </form>
+      </div>
+  </div>
+
+{% endblock content %}

@@ -3,6 +3,7 @@ from datetime import datetime
 
 
 class Product(db.Model):
+    __searchbale__ = ['name','price','description']
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False )
     price = db.Column(db.Integer, nullable=False)

@@ -12,9 +12,9 @@
 
                 
                 <ul>
-                    <li id="small_image_1" style="margin-top: 30px;"><img src="{{url_for('static', filename='images/' + product.image_1 )}}" alt="image 1" width="80" height="70"></li>
-                    <li id="small_image_2" style="margin-top: 30px;"><img src="{{url_for('static', filename='images/' + product.image_2 )}}" alt="image 2" width="80" height="70"></li>
-                    <li id="small_image_3" style="margin-top: 30px;"><img src="{{url_for('static', filename='images/' + product.image_3 )}}" alt="image 3" width="80" height="70"></li>
+                    <li id="small_image_1" style="margin-top: 30px;"><img src="{{url_for('static', filename='images/product_images/' + product.image_1 )}}" alt="image 1" width="80" height="70"></li>
+                    <li id="small_image_2" style="margin-top: 30px;"><img src="{{url_for('static', filename='images/product_images/' + product.image_2 )}}" alt="image 2" width="80" height="70"></li>
+                    <li id="small_image_3" style="margin-top: 30px;"><img src="{{url_for('static', filename='images/product_images/' + product.image_3 )}}" alt="image 3" width="80" height="70"></li>
 
                 </ul>
             </div>
@@ -22,7 +22,7 @@
 
 
             <div  class="col-lg-5 " style="margin-left: 10px;">
-                <img id="big_image" src="{{url_for('static', filename='images/' + product.image_1)}}" 
+                <img id="big_image" src="{{url_for('static', filename='images/product_images/' + product.image_1)}}" 
                 alt="{{product.name}}" width="400" height="400">
                 <div class="container mt-5">
                     
@@ -65,7 +65,7 @@
                     <button type="submit"class="btn btn-lg light-orange" style="width: 180px;  position: absolute;left: 539px; top:610px; "><i class="fa-solid fa-cart-shopping"></i>Add to cart</button>
                 </form>
                 <h5 class="mt-5">Product Description: </h2>
-                    <img  class ="m-3 mt-4 mb-4"src="{{ url_for('static', filename='images/' + product.image_3)}}" alt="">
+                    <img  class ="m-3 mt-4 mb-4"src="{{ url_for('static', filename='images/product_images/' + product.image_3)}}" alt="">
                     <p>{{ product.description}}</p>
             </div>
         </div>

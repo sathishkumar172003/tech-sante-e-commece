@@ -1,12 +1,12 @@
 from flask import request, redirect, render_template, url_for, flash, session, current_app
-from myshop import app, db
+from myshop import app, db, search
 from .models import Brand, Category, Product
 from .forms import Addproduct
 from werkzeug.utils import secure_filename
 import os 
 import uuid
 
-UPLOAD_FOLDER = '/home/sathish/VsCode/python-projects/e-commerce/myshop/static/images/'
+UPLOAD_FOLDER = '/home/sathish/VsCode/python-projects/e-commerce/myshop/static/images/product_images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
 
 
@@ -20,7 +20,22 @@ def product_home():
     brands=brands,categories=categories, product_page = "true" )
 
 
+@app.route('/searchResult', methods=["POST", "GET"])
+def search_result():
+    page = request.args.get('page', 1, type=int)
 
+    brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
+    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+
+    if request.method == "POST":
+        search_word = request.form.get('search')
+        products = Product.query.msearch(search_word, fields=['name', 'description', 'price']).paginate(per_page=3, page=page)
+        
+        return render_template('products/all_products_page.html', products = products,
+    brands=brands,categories=categories, product_page = "true" )
+    
+
+    return render_template('products/search_result.html')
 
 
 

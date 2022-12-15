@@ -13,7 +13,7 @@
             <div class="col-md-8 mt-5">
                 <div class="card" style="border: none;">
                    <div class="card-body">
-                    <img class=" card-img-top float-start me-lg-5 "  style="width:180px ; margin-left: 55px; " src="{{url_for('static', filename='images/'+product.image_1)}}"  width="40" height="180"alt="product image ">
+                    <img class=" card-img-top float-start me-lg-5 "  style="width:180px ; margin-left: 55px; " src="{{url_for('static', filename='images/product_images/'+product.image_1)}}"  width="40" height="180"alt="product image ">
                     {% if product.discount > 0 %}
                     <h5>Discount: {{product.discount}}%</h5>
                     {% endif %}
@@ -29,7 +29,7 @@
                
                     <!-- details button -->
                     <a href="{{ url_for('single_product', id=product.id)}}">
-                        <button class="btn dark-orange m-3 d-inline" style="position:absolute;left:160px; bottom: -10px;" >Details</button>
+                        <button class="btn dark-orange m-3 d-inline" style="position:absolute;left:160px; bottom: -10px;box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);box-sizing: border-box;" >Details</button>
                     </a>
                 </div>  
                 </div>
