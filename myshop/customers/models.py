@@ -1,7 +1,7 @@
 from myshop import app, db
 from datetime import datetime
 
-class customer_registration_table(db.Model):
+class customer_database(db.Model):
    id = db.Column(db.Integer, primary_key=True)
    username = db.Column(db.String(50), nullable=False)
    email = db.Column(db.String(150), unique=True, nullable=False)

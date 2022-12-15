@@ -26,7 +26,7 @@ class customer_registration_form(FlaskForm):
 
 
 
-class LoginForm(FlaskForm):
+class Customer_login_form(FlaskForm):
     email = EmailField(label="Email", validators=[DataRequired(), Email()])
     password = PasswordField(label="Password", validators=[DataRequired()])
     submit = SubmitField(label="Login")
