@@ -6,16 +6,18 @@ from .forms import Customer_login_form
 from werkzeug.utils import secure_filename
 import uuid
 import os
+from flask_login import login_required, login_user, logout_user, current_user
 
-UPLOAD_FOLDER = '/home/sathish/VsCode/python-projects/e-commerce/myshop/static/images/user_images/'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
+
+
 
 
 @app.route('/customerRegister', methods=['POST','GET'])
+
 def customer_sign_in():
     form = customer_registration_form()
-    if request.method == "POST" and form.validate_on_submit():
-        print('form fe') 
+    if  form.validate_on_submit():
+       
         username = form.username.data
         email = form.email.data
         password = bcrypt.generate_password_hash(form.password.data)
@@ -32,37 +34,39 @@ def customer_sign_in():
         profile = image_1_uuid, state = state , zipcode=zipcode)
         db.session.add(user)
         db.session.commit()
-        flash(f' {username}successfully created account ', 'success')
+        flash(f' Welcome {username} ', 'success')
         return redirect(url_for('product_home'))
    
 
         
 
 
-    return render_template('customers/sign_in.html', form=form)
+    return render_template('customers/sign_in.html', form=form, title='user registration')
 
 
 
 @app.route('/customerLogin', methods=["POST", "GET"])
+
 def customer_login():
     form = Customer_login_form()
     
-    if request.method == "POST" and form.validate_on_submit():
+    if form.validate_on_submit():
         customer = customer_database.query.filter_by(email = form.email.data).first()
         if customer:
             print(customer.email)
             password = bcrypt.check_password_hash(customer.password, form.password.data)
             if password:
-                
-                flash('succesfully logged in', 'success')
+                login_user(customer)
+                flash('you have succesfully logged in', 'success')
+                next = request.args.get('next')
                 return redirect(url_for('product_home'))
             else:
                 flash('password incorrect', 'danger')
-                return redirect(request.referrer)
+                return redirect( next or url_for('product_home'))
 
         else:
             flash('email not found, please check your email ', 'danger')
             return redirect(url_for('customer_login'))
         
-    return render_template('customers/login.html',form=form)
+    return render_template('customers/login.html',form=form,title="user login")
 

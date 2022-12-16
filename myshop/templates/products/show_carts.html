@@ -19,7 +19,7 @@
                         {% set pro_discount = ((product.discount/100) * product.price  ) %}
                         <div class="card mb-5" style="border: none;">
                            <div class="card-body">
-                            <img class=" card-img-top float-start me-lg-5 "  style="width:180px ; margin-left: 55px; " src="{{url_for('static', filename='images/product_images/'+product.image)}}"  width="40" height="150"alt="product image ">
+                            <img class=" card-img-top float-start me-lg-5 "  style="width:180px ; margin-left: 55px; " src="{{url_for('static', filename='images/'+product.image)}}"  width="40" height="150"alt="product image ">
                             <a href="{{ url_for('single_product', id=key)}}">
 
                                 <h6 class="text-dark mt-3" style="margin-left:320px;">{{product.name}}</h6>

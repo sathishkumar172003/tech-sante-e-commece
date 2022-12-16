@@ -1,7 +1,9 @@
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from flask_wtf import FlaskForm 
 from wtforms import StringField, IntegerField, TextAreaField, SubmitField, EmailField, PasswordField
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from myshop.customers.models import customer_database
+
 
 
 class customer_registration_form(FlaskForm):
@@ -23,6 +25,13 @@ class customer_registration_form(FlaskForm):
 
     zipcode = StringField(label='Enter zip code',validators=[DataRequired()] )
     submit = SubmitField(label="Register")
+
+    def validate_email(self, email):
+        user =  customer_database.query.filter_by(email = email.data).first()
+        if user:
+            raise ValidationError("user already exists! ")
+
+   
 
 
 

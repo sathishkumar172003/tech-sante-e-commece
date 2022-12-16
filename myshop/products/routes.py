@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 import os 
 import uuid
 
-UPLOAD_FOLDER = '/home/sathish/VsCode/python-projects/e-commerce/myshop/static/images/product_images'
+UPLOAD_FOLDER = '/home/sathish/VsCode/python-projects/e-commerce/myshop/static/images/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
 
 
@@ -29,7 +29,7 @@ def search_result():
 
     if request.method == "POST":
         search_word = request.form.get('search')
-        products = Product.query.msearch(search_word, fields=['name', 'description', 'price']).paginate(per_page=3, page=page)
+        products = Product.query.msearch(search_word, fields=['name', 'description', 'price']).paginate(per_page=6, page=page)
         
         return render_template('products/all_products_page.html', products = products,
     brands=brands,categories=categories, product_page = "true" )
@@ -43,7 +43,7 @@ def search_result():
 @app.route('/productByBrand/<int:id>', methods=["POST", "GET"])
 def product_by_brand(id):
     page = request.args.get('page', 1, type=int)
-    product_by_brand = Product.query.filter_by(brand_id = id).paginate(page=page, per_page=2)
+    product_by_brand = Product.query.filter_by(brand_id = id).paginate(page=page, per_page=6)
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
     return render_template('products/all_products_page.html', products = product_by_brand,
@@ -52,7 +52,7 @@ def product_by_brand(id):
 @app.route('/productByCat/<int:id>', methods=["POST", "GET"])
 def product_by_cat(id):
     page = request.args.get('page', 1, type=int)
-    product_by_cat = Product.query.filter_by(category_id = id).paginate(page=page, per_page=2)
+    product_by_cat = Product.query.filter_by(category_id = id).paginate(page=page, per_page=6)
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
     return render_template('products/all_products_page.html', products = product_by_cat,

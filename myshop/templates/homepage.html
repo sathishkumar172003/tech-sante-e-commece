@@ -6,8 +6,41 @@
 <div class="container-fluid  p-0">
     {% include "_home_navbar.html" %}
     <div class="container">
-        <h1> Home page under construction </h1>
+       
+      
+        
+          <div class='card'>
+            <div class='card-body'>
+                <div class="row">
+                    <h3>products from trusted brands </h1>
+                    {% for product in products.items %}
+                        <div class='col-lg-3'>
+                            <div class="card" style="height: 350px;">
+                                <div class="card-header">
+                                   <a href="{{url_for('product_by_brand', id=product.brand_id)}}"> {{ product.brand.name}}</a>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{url_for('static', filename='images/'+product.image_1)}}">
+                                </div>
+                                <div class="card-footer" style="height: 50px;">
+                                    <a href="{{ url_for('single_product', id=product.id)}}" class="text-dark">
+                                        <h6>{{product.name}}</h6>
+
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <a href="{{ url_for('product_home')}}" style="position:absolute;right:-70px; top:250px;"><span>see more </span></a>
+
+          </div>
+
+    
     </div>
 </div>
 
-{% endblock content }
+{% endblock content %}

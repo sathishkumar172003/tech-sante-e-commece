@@ -13,7 +13,7 @@
             <div class="col-md-8 mt-5">
                 <div class="card" style="border: none;">
                    <div class="card-body">
-                    <img class=" card-img-top float-start me-lg-5 "  style="width:180px ; margin-left: 55px; " src="{{url_for('static', filename='images/product_images/'+product.image_1)}}"  width="40" height="180"alt="product image ">
+                    <img class=" card-img-top float-start me-lg-5 "  style="width:180px ; margin-left: 55px; " src="{{url_for('static', filename='images/'+product.image_1)}}"  width="40" height="180"alt="product image ">
                     {% if product.discount > 0 %}
                     <h5>Discount: {{product.discount}}%</h5>
                     {% endif %}
