@@ -1,19 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from myshop import app, db, bcrypt
 from .forms import customer_registration_form
-from .models import customer_database
+from .models import customer_database, Customer_order
 from .forms import Customer_login_form
 from werkzeug.utils import secure_filename
 import uuid
 import os
 from flask_login import login_required, login_user, logout_user, current_user
+import secrets
 
 
 
 
 
 @app.route('/customerRegister', methods=['POST','GET'])
-
+@login_required
 def customer_sign_in():
     form = customer_registration_form()
     if  form.validate_on_submit():
@@ -59,7 +60,7 @@ def customer_login():
                 login_user(customer)
                 flash('you have succesfully logged in', 'success')
                 next = request.args.get('next')
-                return redirect(url_for('product_home'))
+                return redirect(next or url_for('home'))
             else:
                 flash('password incorrect', 'danger')
                 return redirect( next or url_for('product_home'))
@@ -70,3 +71,29 @@ def customer_login():
         
     return render_template('customers/login.html',form=form,title="user login")
 
+@app.route('/customer/logout')
+@login_required
+def customer_logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+
+@app.route('/customerOrders')
+@login_required
+def customer_order():
+    if current_user.is_authenticated:
+        customer_id = current_user.id 
+        invoice = secrets.token_hex(5)
+        try:
+            order = Customer_order(invoice = invoice, customer_id = customer_id, order_items = session['shopping_cart'])
+            db.session.add(order)
+            db.session.commit()
+            session.pop('shopping_cart')
+            flash('your order has been sent successfully', 'success')
+            return redirect(url_for('product_home'))
+        except Exception as e :
+            print(e)
+            flash('something went wrong while giving order', 'danger')
+            return redirect(url_for('show_carts'))
+
+    
