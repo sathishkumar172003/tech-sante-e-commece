@@ -5,6 +5,8 @@ from .forms import Addproduct
 from werkzeug.utils import secure_filename
 import os 
 import uuid
+from myshop.carts.models import Cart
+from flask_login import current_user
 
 UPLOAD_FOLDER = '/home/sathish/VsCode/python-projects/e-commerce/myshop/static/images/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
@@ -16,8 +18,12 @@ def product_home():
     product = Product.query.filter(Product.stock > 0).order_by(Product.id.desc()).paginate(per_page=5, page=page)
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+    if current_user.is_authenticated:
+        carts = Cart.query.filter_by(customer_id = current_user.id).all()
+    else:
+        carts = []
     return render_template('products/all_products_page.html', products = product,
-    brands=brands,categories=categories, product_page = "true" )
+    brands=brands,categories=categories, product_page = "true" ,carts = carts)
 
 
 @app.route('/searchResult', methods=["POST", "GET"])
@@ -26,6 +32,7 @@ def search_result():
 
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+    carts = Cart.query.filter_by(customer_id = current_user.id).all()
 
     if request.method == "POST":
         search_word = request.form.get('search')
@@ -35,7 +42,7 @@ def search_result():
     brands=brands,categories=categories, product_page = "true" )
     
 
-    return render_template('products/search_result.html')
+    
 
 
 
@@ -46,8 +53,10 @@ def product_by_brand(id):
     product_by_brand = Product.query.filter_by(brand_id = id).paginate(page=page, per_page=6)
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+    carts = Cart.query.filter_by(customer_id = current_user.id).all()
+
     return render_template('products/all_products_page.html', products = product_by_brand,
-    brands=brands,categories=categories, brand_page = "true" ,id=id)
+    brands=brands,categories=categories, brand_page = "true" ,id=id, carts = carts)
     
 @app.route('/productByCat/<int:id>', methods=["POST", "GET"])
 def product_by_cat(id):
@@ -55,13 +64,17 @@ def product_by_cat(id):
     product_by_cat = Product.query.filter_by(category_id = id).paginate(page=page, per_page=6)
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id )).all()
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+    carts = Cart.query.filter_by(customer_id = current_user.id).all()
+
     return render_template('products/all_products_page.html', products = product_by_cat,
-    brands=brands,categories=categories, category_page = "true", id=id )
+    brands=brands,categories=categories, category_page = "true", id=id , carts = carts)
 
 
 @app.route('/single_product/<int:id>', methods=["POST", "GET"])
 def single_product(id):
     product = Product.query.get_or_404(id)
+    carts = Cart.query.filter_by(customer_id = current_user.id).all()
+
     return render_template('products/single_product.html', product = product, title=product.name)
 
 

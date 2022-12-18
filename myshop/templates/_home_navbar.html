@@ -57,7 +57,7 @@
         </li>
         {% endif %}
         <li class="nav-item ">
-          <a class="nav-link text-white" href="{{ url_for('show_carts')}}"><i class="fa-solid fa-cart-shopping"></i>cart({{ session['shopping_cart'] | length }})</a>
+          <a class="nav-link text-white" href="{{ url_for('show_carts')}}"><i class="fa-solid fa-cart-shopping"></i>cart({{ carts | length }})</a>
         </li>
       </ul>
      

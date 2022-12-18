@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from myshop import app, db, bcrypt
 from .forms import customer_registration_form
-from .models import customer_database, Customer_order
+from .models import customer_database
 from .forms import Customer_login_form
 from werkzeug.utils import secure_filename
 import uuid
@@ -50,7 +50,7 @@ def customer_sign_in():
 
 def customer_login():
     form = Customer_login_form()
-    
+    next = request.args.get('next')
     if form.validate_on_submit():
         customer = customer_database.query.filter_by(email = form.email.data).first()
         if customer:
@@ -59,15 +59,15 @@ def customer_login():
             if password:
                 login_user(customer)
                 flash('you have succesfully logged in', 'success')
-                next = request.args.get('next')
-                return redirect(next or url_for('home'))
+                
+                return redirect(url_for('home'))
             else:
                 flash('password incorrect', 'danger')
-                return redirect( next or url_for('product_home'))
+                return redirect(request.referrer)
 
         else:
             flash('email not found, please check your email ', 'danger')
-            return redirect(url_for('customer_login'))
+            return redirect(request.referrer)
         
     return render_template('customers/login.html',form=form,title="user login")
 
@@ -78,22 +78,7 @@ def customer_logout():
     return redirect(url_for('home'))
 
 
-@app.route('/customerOrders')
-@login_required
-def customer_order():
-    if current_user.is_authenticated:
-        customer_id = current_user.id 
-        invoice = secrets.token_hex(5)
-        try:
-            order = Customer_order(invoice = invoice, customer_id = customer_id, order_items = session['shopping_cart'])
-            db.session.add(order)
-            db.session.commit()
-            session.pop('shopping_cart')
-            flash('your order has been sent successfully', 'success')
-            return redirect(url_for('product_home'))
-        except Exception as e :
-            print(e)
-            flash('something went wrong while giving order', 'danger')
-            return redirect(url_for('show_carts'))
+
+
 
     
