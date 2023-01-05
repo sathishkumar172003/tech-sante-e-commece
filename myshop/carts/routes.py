@@ -35,31 +35,38 @@ def show_carts():
 
       
             
-@app.route('/addCart' , methods=["POST"])
+@app.route('/addCart' , methods=["POST", "GET"])
 @login_required
 def add_cart():
-   
     product_id = request.form.get('product_id')
     quantity = request.form.get('quantity')
     customer_id = current_user.id
     product = Product.query.filter_by(id = product_id).first()
     if request.method == "POST" and quantity:
+      
         try:
            
             cart = Cart.query.filter_by(product_id = product_id).first()
             if cart:
-                flash(f'{cart.product.name}  is already in your cart', 'warning')
-                return redirect(request.referrer)
+
+                if cart.customer_id == current_user.id:
+                    flash(f'{cart.product.name}  is already in your cart', 'warning')
+                    return redirect(request.referrer)
             else:
-                cart = Cart(product_id = product_id, customer_id = customer_id)
+                cart = Cart(product_id = product_id, customer_id = current_user.id)
                 db.session.add(cart)
                 db.session.commit()
                 flash(f'{product.name} added to your cart ', 'success')
                 return redirect(request.referrer)
 
         except Exception as e:
+            
             print(e)
         
+
+    
+        
+    
         
 
     

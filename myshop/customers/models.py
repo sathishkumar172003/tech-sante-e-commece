@@ -1,7 +1,8 @@
+
 from myshop import app, db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
-from datetime import datetime
+
 
 
 
@@ -24,7 +25,6 @@ class customer_database(db.Model, UserMixin):
 
    profile = db.Column(db.String(150), default="profile.jpeg", nullable=False)
    date_created = db.Column(db.DateTime, default = datetime.utcnow)
-
 
 
 
