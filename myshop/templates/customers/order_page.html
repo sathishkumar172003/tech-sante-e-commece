@@ -1,97 +1,80 @@
 {% extends "layout.html" %}
+
 {% block content %}
 
-
 <div class="container-fluid p-0">
-    {% include "_home_navbar.html" %}
-
-</div>
-    <div class="container ">
-  
-        
-        
-        <div class="row mt-4">
-            <div class="col-lg-7"  >
-                <div class="card mb-4" style="border: none;">
-                    <h3>Shopping cart</h3>
-                </div>
-                <div class="row">
-                    {% for order in orders %}
-                    <div class="col-md-12 ">
-                        <div class="card mb-5" style="border: none;">
-                           <div class="card-body">
-                            <img class=" card-img-top float-start me-lg-5 "  style="width:180px ; margin-left: 55px; " src="{{url_for('static', filename='images/'+order.product.image_1)}}"  width="40" height="150"alt="product image ">
-                            <a href="{{ url_for('single_product', id=order.product.id)}}">
-
-                                <h6 class="text-dark mt-3" style="margin-left:320px;">{{order.product_name}}</h6>
-
-                            </a>
-                            <h6>Name: {{ order.name}}</h1>
-                                <h6>Price: {{ order.price }}</h6>
-                                <h6>Quanity: {{ order.quantity }}</h6>
-                                <h6>Discount: {{ order.discount }}</h6>
-                                <h6>Ordered date: {{order.ordered_date }}</h6>
-                                <h6>Delivery date: {{order.deliver_date}}</h6>
-                                <h6>Status : {{status}}</h6>
-                        </div>  
-                        </div>
-        
-                        </div>
-         
-            {% endfor%}
-
-</div>
-      
-         
-        </div>
-        
-  
+    {% include "_home_navbar.html"%}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="text-dark mt-3">
+                    <h3>Your order list</h3>
+                    <div class="row mt-4">
+                        {% for order in orders %}
+                        <div class="col-md-12 ">
+                            <div class="card mb-5" style="border: none;">
+                               <div class="card-body">
+                                <img class=" card-img-top float-start me-lg-5 "  style="width:180px ; margin-left: 55px; " src="{{url_for('static', filename='images/'+order.product.image_1)}}"  width="40" height="150"alt="product image ">
+                                <a href="{{ url_for('single_product', id=order.product.id)}}">
     
-    <div class="col-lg-7 ">
-        <div class="card  m-0 mt-5 ms-3">
-            <div class="card-header m-0 pt-3 pb-3">
-                PRICE DETAILS 
-            </div>
-            <div class="card-body">
-                <hr style="position: relative; top: 130px;">
-                <div class="row">
-
-               
-                <div class="col-lg-5 m-0 ">
-                    <h6>price ({{ orders  | length }} items)</h6>
-                    <h6 class="mt-3">Discount </h1> 
-                        <h6 class="mt-3">Delivery charges </h1>  
-                            <h6 class="mt-5">Total Amount </h6>
-                       
-            </div> 
-            <div class="col m-0">
-               
-            </div>
-            <div class="col-lg-4 text-lg-end">
-                <h6>₹{{total_price}} </h6>
-                <h6 class="mt-3 text-success">-₹{{total_discount}} </h6>
-                    <h6 class="mt-3 "><span class="text-muted text-decoration-line-through">₹100  </span>free</h6>
-                    <h6 class="mt-5">₹{{final_amount}}</h6>
-                    
-            </div> 
-        </div>
-        </div>
-        </div>
-
+                                    <h6 class="text-dark mt-3" style="margin-left:320px;">{{order.product_name}}</h6>
+    
+                                </a>
+                                <h6>Name: {{ order.name}}</h1>
+                                    <h6>Price: {{ order.price }}</h6>
+                                    <h6>Quanity: {{ order.quantity }}</h6>
+                                    <h6>Discount: {{ order.discount }}</h6>
+                                    <h6>Ordered date: {{order.ordered_date }}</h6>
+                                    <h6>Delivery date: {{order.deliver_date}}</h6>
+                                    <h6>Status : {{status}}</h6>
+                            </div>  
+                            </div>
+            
+                            </div>
+             
+                {% endfor%}
+    
     </div>
 
-   
-
-
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card  m-0 mt-5 ms-3">
+                    <div class="card-header m-0 pt-3 pb-3">
+                        SHIPMENT DETAILS
+                    </div>
+                    <div class="card-body">
+                        <hr style="position: relative; top: 130px;">
+                        <div class="row">
+        
+                       
+                        <div class="col-lg-5 m-0 ">
+                            <h6>Shipment Address </h6>
+                            <h6 class="mt-3">city  </h1> 
+                                <h6 class="mt-3">State </h1>  
+                                    <h6 class="mt-5">country</h6>
+                               
+                    </div> 
+                    <div class="col m-0">
+                       
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <h6> {{current_user.address}}</h6>
+                        <h6 class="mt-3 text-success">  {{current_user.city }}</h6>
+                            <h6 class="mt-3 "> {{current_user.state }}</h6>
+                            <h6 class="mt-5"> {{current_user.country }}</h6>
+                            
+                    </div> 
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-</div>
-
-</div>
-
-
-
 
 
 {% endblock content %}
+
+
+

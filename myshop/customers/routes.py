@@ -54,10 +54,13 @@ if ordered_month in months_with_30_days:
         else:
             delivery_month = ordered_month + 1
 
-
+@app.route('/customerHomepage', methods=['GET', "POST"])
+@login_required
+def customer_homepage():
+    return render_template('customers/customer_homepage.html')
 
 @app.route('/customerRegister', methods=['POST','GET'])
-@login_required
+
 def customer_sign_in():
     form = customer_registration_form()
     if  form.validate_on_submit():

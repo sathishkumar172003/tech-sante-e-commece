@@ -1,0 +1,31 @@
+{% extends "layout.html"%}
+
+
+{% block content %}
+
+<div class="container-fluid p-0 ">
+    {% include "_home_navbar.html"%}
+    <div class="container mt-5">
+        <div class = 'content-section text-center  p-5' style="width: 500px; background-color: #E1D9D1; border-radius: 25px;">
+            <div class="media">
+                        <img class="rounded-circle " src="{{url_for('static', filename='images/'+current_user.profile)}}" style="width: 250px; height: 200px;">
+        
+                <div class="media-body">
+                   <h2 class="account-heading text-floating text-center mt-3"  >{{current_user.username}}</h2>
+                <p class="text-secondary text-floating mb-0 " >{{current_user.email}}</p><br>
+                <h6>
+                    {{current_user.address }}, {{current_user.city}}, {{current_user.zipcode}}, {{current_user.state}}, {{current_user.country}}
+                </h6>
+                    <a href="{{url_for('order_route')}}"> <button class="btn btn-outline-success mt-2">My orders </button></a>
+                    <a href="{{url_for('customer_logout')}}"> <button class="btn btn-outline-success mt-2 " style="margin-left:25px;">Logout </button></a>
+        
+                </div>
+        
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
