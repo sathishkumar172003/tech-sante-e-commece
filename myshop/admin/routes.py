@@ -98,4 +98,6 @@ def products():
 
     return render_template("admin/show_product.html", title="product Page",
     products = product_1, bg_dark = "true")
-    
+
+
+   
