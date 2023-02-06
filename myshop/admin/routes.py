@@ -3,6 +3,7 @@ from .. import app,db, bcrypt
 from .forms import RegistrationForm, LoginForm
 from .models import User
 from myshop.products.models import Product, Brand, Category
+from myshop.customers.models import customer_database
 
 
 
@@ -100,4 +101,12 @@ def products():
     products = product_1, bg_dark = "true")
 
 
-   
+@app.route('/admin/customers')
+def customer():
+    if 'email' not in session:
+        flash('login to access this page', 'danger')
+        return redirect(url_for('login'))
+    customer_1 = customer_database.query.all()
+
+    return render_template('admin/show_customer.html', title='customers list', 
+    customers = customer_1, bg_dark='true')

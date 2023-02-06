@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+
+
+{% block content %}
+<div class="container-fluid p-0 " >
+
+    {% include "_admin_navbar.html" %}
+    <div class="container mt-5 ">
+        {% include "_messages.html" %}
+  
+    <div class="container mb-5 text-center text-dark alert alert-info p-1">
+        <h2 > Customer information </h2>
+    </div>
+    <div class="container  ">
+        <table class="table table-sm-5 table-hover">
+            <thead>
+                <th>Sl.No</th>
+                <th>customer</th>
+                <th>email</th>
+                <th>country</th>
+                <th>state</th>
+                <th>city</th>
+                
+              
+            </thead>
+            <tbody>
+                {% for customer in customers%}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{customer.username}}</td>
+                    <td>{{customer.email}}</td>
+                    <td>{{customer.country}}</td>
+                    <td>{{customer.state}}</td>
+                    <td>{{customer.city}}</td>
+                 
+                
+    
+                </tr>
+
+                <!-- Button trigger modal -->
+
+  
+
+  
+                {% endfor %}
+            </tbody>
+        </table>
+      
+    </div>
+
+</div>
+</div>
+
+{% endblock content %}
