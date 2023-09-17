@@ -12,7 +12,7 @@ from flask_login import LoginManager
 
 
 app = Flask(__name__)
-app.config["SECRET_KEY"]= "sathishkumar17"
+app.config["SECRET_KEY"]= "**********"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///myshop.db"
 
 db = SQLAlchemy(app)
