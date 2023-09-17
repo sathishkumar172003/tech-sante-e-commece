@@ -15,7 +15,7 @@ from datetime import datetime
 ordered_date = datetime.utcnow().day
 ordered_month = datetime.utcnow().month
 delivery_date = ordered_date + 5
-delivery_month = 0
+delivery_month = ordered_month
 delivery_year = datetime.utcnow().year
 
 

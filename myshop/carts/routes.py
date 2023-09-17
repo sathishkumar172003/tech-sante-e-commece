@@ -21,7 +21,7 @@ def show_carts():
 
             total_discount = 0
             for cart in carts:
-                total_price = int(cart.product.price) * int(cart.quantity)
+                total_price += int(cart.product.price) * int(cart.quantity)
                 dis = ((cart.product.discount / 100) * cart.product.price)
                 total_discount += int(dis)
             # for key, product in session['shopping_cart'].items():

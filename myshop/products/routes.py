@@ -2,6 +2,7 @@ from flask import request, redirect, render_template, url_for, flash, session, c
 from myshop import app, db, search
 from .models import Brand, Category, Product
 from .forms import Addproduct
+from flask_login import login_required
 from werkzeug.utils import secure_filename
 import os 
 import uuid
@@ -13,6 +14,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route('/')
+
 def product_home():
     page = request.args.get('page', 1, type=int)
     product = Product.query.filter(Product.stock > 0).order_by(Product.id.desc()).paginate(per_page=5, page=page)
@@ -27,6 +29,7 @@ def product_home():
 
 
 @app.route('/searchResult', methods=["POST", "GET"])
+@login_required
 def search_result():
     page = request.args.get('page', 1, type=int)
 
@@ -48,6 +51,7 @@ def search_result():
 
 
 @app.route('/productByBrand/<int:id>', methods=["POST", "GET"])
+@login_required
 def product_by_brand(id):
     page = request.args.get('page', 1, type=int)
     product_by_brand = Product.query.filter_by(brand_id = id).paginate(page=page, per_page=6)
@@ -59,6 +63,7 @@ def product_by_brand(id):
     brands=brands,categories=categories, brand_page = "true" ,id=id, carts = carts)
     
 @app.route('/productByCat/<int:id>', methods=["POST", "GET"])
+@login_required
 def product_by_cat(id):
     page = request.args.get('page', 1, type=int)
     product_by_cat = Product.query.filter_by(category_id = id).paginate(page=page, per_page=6)
@@ -71,6 +76,7 @@ def product_by_cat(id):
 
 
 @app.route('/single_product/<int:id>', methods=["POST", "GET"])
+@login_required
 def single_product(id):
     product = Product.query.get_or_404(id)
     carts = Cart.query.filter_by(customer_id = current_user.id).all()
@@ -81,6 +87,7 @@ def single_product(id):
 
 
 @app.route('/product/addbrand', methods=["POST", "GET"])
+
 def addbrand():
     if 'email' not in session:
         flash("login to access the page", 'danger')
