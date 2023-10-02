@@ -4,3 +4,4 @@ OWNER/AUTHOR : SATHISH KUMAR
 MINOR PROJECT
 TITLE : TECH SANTE
 DURATION : FEBRUARY-MARCH 2023 5th SEM 
+DESCRIPTION : Desing and Developed a E-commerce website using Python's Flask Framework.
